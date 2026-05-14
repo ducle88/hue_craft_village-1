@@ -20,12 +20,6 @@ import { galleryImagePaths } from "@/data/gallery";
 /** Khoảng cách giữa 4 thẻ carousel “Làng nghề nổi bật” (px, khớp `gap-5` ≈ 20px) */
 const FEATURED_GAP_PX = 20;
 
-const foodHue = [
-  { label: "Bún bò Huế", src: "/images/foods/bun-bo.png" },
-  { label: "Bánh bèo", src: "/images/foods/banh-beo.png" },
-  { label: "Chè Huế", src: "/images/foods/che-hue.png" },
-];
-
 /** Submenu “Chuyên mục khởi nghiệp” — đồng bộ với `siteNavProminentBar` */
 const khoiNghiepSubLinks = siteNavProminentBar.flatMap((item) =>
   navItemHasChildren(item) && item.href === "/khoi-nghiep" ? [...item.children] : []
@@ -135,11 +129,11 @@ export function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#1a0f0c]/82 via-[#2a1512]/55 to-transparent" />
         <div className="container-luxury relative flex flex-col pb-10 pt-28 text-[#f5efe6] md:pb-16 md:pt-36">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <h1 className="max-w-4xl font-heading text-4xl font-semibold leading-[1.12] tracking-tight md:text-6xl lg:text-7xl">
-              KHÁM PHÁ LÀNG NGHỀ HUẾ
+            <h1 className="max-w-4xl font-heading text-2xl font-semibold leading-[1.5] lg:leading-[1.12] tracking-tight md:text-6xl lg:text-4xl">
+              KHÁM PHÁ LÀNG NGHỀ TRUYỀN THỐNG HUẾ
             </h1>
-            <p className="mt-5 max-w-xl text-base text-[#f5efe6]/92 md:text-lg">
-              Nơi lưu giữ tinh hoa văn hóa cố đô
+            <p className="mt-5 max-w-3xl text-base text-[#f5efe6]/92 md:text-lg">
+            Nơi hội tụ di sản thủ công, hướng nghiệp và cơ hội khởi nghiệp cho thế hệ trẻ.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
@@ -282,59 +276,11 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Chuyên mục khởi nghiệp & Tư vấn hướng nghiệp */}
+      {/* Tư vấn hướng nghiệp & Chuyên mục khởi nghiệp (cột trái → phải) */}
       <section className="container-luxury py-16 md:py-20">
-        <div className="grid gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
-          <FadeIn className="flex h-full flex-col rounded-2xl border-2 border-[#0B8CB4]/30 bg-[#eff8fc] p-8 shadow-sm md:p-10">
-            <h3 className="font-heading text-2xl text-[#2f2018] md:text-3xl">Chuyên mục khởi nghiệp</h3>
-            <p className="mt-3 text-sm text-[#5c4033]/85">
-              Quy trình, tài liệu và chatbot hỗ trợ bạn hình thành ý tưởng kinh doanh phù hợp.
-            </p>
-            <div className="relative mt-5 aspect-video w-full overflow-hidden rounded-lg border border-[#c8dce8] bg-black shadow-sm ring-1 ring-[#0B8CB4]/12">
-              <iframe
-                className="absolute inset-0 size-full"
-                src="https://www.youtube.com/embed/QLAsmB68m7I"
-                title="Video chuyên mục khởi nghiệp"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
-            </div>
-            <ul className="mt-6 divide-y divide-[#c5e8f4] border-y border-[#c5e8f4]">
-              {khoiNghiepSubLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="group flex items-center justify-between gap-3 py-3.5 text-left text-sm font-medium text-[#2f2018] transition hover:text-[#0B8CB4]"
-                  >
-                    <span className="leading-snug">{link.label}</span>
-                    <ArrowRight
-                      className="size-4 shrink-0 text-[#0B8CB4]/55 transition group-hover:translate-x-0.5 group-hover:text-[#0B8CB4]"
-                      strokeWidth={2}
-                      aria-hidden
-                    />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-auto flex flex-col gap-3 pt-8 sm:flex-row">
-              <Link
-                href="/khoi-nghiep"
-                className="inline-flex flex-1 items-center justify-center border border-[#0B8CB4] bg-white py-3 text-center text-sm font-semibold uppercase tracking-[0.12em] text-[#0B8CB4] transition hover:bg-[#0B8CB4] hover:text-[#f5efe6]"
-              >
-                Tìm hiểu thêm
-              </Link>
-              <Link
-                href="/chatbot-khoi-nghiep"
-                className="inline-flex flex-1 items-center justify-center bg-[#0B8CB4] py-3 text-center text-sm font-semibold uppercase tracking-[0.12em] text-[#f5efe6] transition hover:bg-[#086b8d]"
-              >
-                Chatbot AI
-              </Link>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.06} className="flex h-full flex-col rounded-2xl border-2 border-[#7b1e1e]/35 bg-[#fffaf8] p-8 shadow-sm md:p-10">
+        <SectionTitleLines eyebrow="Chuyên mục" title="Tư vấn hướng nghiệp & Khởi nghiệp" />
+        <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-12">
+          <FadeIn className="flex h-full flex-col rounded-2xl border-2 border-[#7b1e1e]/35 bg-[#fffaf8] p-8 shadow-sm md:p-10">
             <h3 className="font-heading text-2xl text-[#2f2018] md:text-3xl">Tư vấn hướng nghiệp</h3>
             <p className="mt-3 text-sm text-[#5c4033]/85">
               Tư vấn và định hướng nghề nghiệp phù hợp năng lực, sở thích của bạn trên cơ sở khoa học.
@@ -382,66 +328,104 @@ export function HomePage() {
               </Link>
             </div>
           </FadeIn>
-        </div>
-      </section>
 
-      {/* Thư viện — Video — Ẩm thực */}
-      <section className="border-t border-[#e8dcc8] bg-[#fdf9f3] py-16 md:py-20">
-        <div className="container-luxury grid gap-10 lg:grid-cols-3">
-          <FadeIn>
-            <h3 className="font-heading text-xl text-[#2f2018] md:text-2xl">Thư viện ảnh</h3>
-            <div className="mt-4 grid grid-cols-4 gap-2">
-              {galleryImagePaths.map((src, i) => (
-                <div key={src} className="relative aspect-square overflow-hidden rounded-md">
-                  <Image src={src} alt={`Ảnh thư viện ${i + 1}`} fill sizes="120px" className="object-cover" quality={68} />
-                </div>
-              ))}
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.05}>
-            <h3 className="font-heading text-xl text-[#2f2018] md:text-2xl">Video giới thiệu</h3>
-            <div className="relative mt-4 aspect-video w-full overflow-hidden rounded-lg border border-[#e0d6cc] bg-black shadow-sm ring-1 ring-[#7b1e1e]/10">
+          <FadeIn delay={0.06} className="flex h-full flex-col rounded-2xl border-2 border-[#0B8CB4]/30 bg-[#eff8fc] p-8 shadow-sm md:p-10">
+            <h3 className="font-heading text-2xl text-[#2f2018] md:text-3xl">Chuyên mục khởi nghiệp</h3>
+            <p className="mt-3 text-sm text-[#5c4033]/85">
+              Quy trình, tài liệu và chatbot hỗ trợ bạn hình thành ý tưởng kinh doanh phù hợp.
+            </p>
+            <div className="relative mt-5 aspect-video w-full overflow-hidden rounded-lg border border-[#c8dce8] bg-black shadow-sm ring-1 ring-[#0B8CB4]/12">
               <iframe
                 className="absolute inset-0 size-full"
-                src="https://www.youtube.com/embed/GrkZOiMwdOQ"
-                title="Video giới thiệu Huế Craft Village"
+                src="https://www.youtube.com/embed/QLAsmB68m7I"
+                title="Video chuyên mục khởi nghiệp"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
-            <p className="mt-3 text-xs text-[#5c4033]/75">
-              Video giới thiệu trên{" "}
-              <a
-                href="https://www.youtube.com/watch?v=GrkZOiMwdOQ"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-md border border-[#e0d6c9] bg-[#faf7f2] px-2 py-0.5 font-medium text-[#7b1e1e] underline-offset-2 transition hover:border-[#d4c4b0] hover:bg-white hover:underline"
-              >
-                YouTube
-              </a>
-              .
-            </p>
-          </FadeIn>
-
-          <FadeIn delay={0.1}>
-            <h3 className="font-heading text-xl text-[#2f2018] md:text-2xl">Ẩm thực Huế</h3>
-            <div className="mt-6 flex flex-wrap justify-center gap-8">
-              {foodHue.map((f) => (
-                <div key={f.label} className="flex flex-col items-center text-center">
-                  <div className="relative size-24 overflow-hidden rounded-full border-4 border-[#f5efe6] shadow-md ring-2 ring-[#c8a96b]/40">
-                    <Image src={f.src} alt={f.label} fill className="object-cover" sizes="96px" />
-                  </div>
-                  <p className="mt-3 text-sm font-semibold text-[#2f2018]">{f.label}</p>
-                </div>
+            <ul className="mt-6 divide-y divide-[#c5e8f4] border-y border-[#c5e8f4]">
+              {khoiNghiepSubLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="group flex items-center justify-between gap-3 py-3.5 text-left text-sm font-medium text-[#2f2018] transition hover:text-[#0B8CB4]"
+                  >
+                    <span className="leading-snug">{link.label}</span>
+                    <ArrowRight
+                      className="size-4 shrink-0 text-[#0B8CB4]/55 transition group-hover:translate-x-0.5 group-hover:text-[#0B8CB4]"
+                      strokeWidth={2}
+                      aria-hidden
+                    />
+                  </Link>
+                </li>
               ))}
+            </ul>
+            <div className="mt-auto flex flex-col gap-3 pt-8 sm:flex-row">
+              <Link
+                href="/khoi-nghiep"
+                className="inline-flex flex-1 items-center justify-center border border-[#0B8CB4] bg-white py-3 text-center text-sm font-semibold uppercase tracking-[0.12em] text-[#0B8CB4] transition hover:bg-[#0B8CB4] hover:text-[#f5efe6]"
+              >
+                Tìm hiểu thêm
+              </Link>
+              <Link
+                href="/chatbot-khoi-nghiep"
+                className="inline-flex flex-1 items-center justify-center bg-[#0B8CB4] py-3 text-center text-sm font-semibold uppercase tracking-[0.12em] text-[#f5efe6] transition hover:bg-[#086b8d]"
+              >
+                Chatbot AI
+              </Link>
             </div>
-            <Link href="/gioi-thieu" className="mt-6 inline-block text-sm font-semibold text-[#7b1e1e]">
-              Xem thêm →
-            </Link>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* Thư viện — Video */}
+      <section className="border-t border-[#e8dcc8] bg-[#fdf9f3] py-16 md:py-20">
+        <div className="container-luxury">
+          <SectionTitleLines eyebrow="Thư viện" title="Không gian hình ảnh & video" />
+          <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:items-stretch">
+            <FadeIn className="flex min-h-0 flex-col lg:h-full">
+              <h3 className="shrink-0 font-heading text-xl text-[#2f2018] md:text-2xl">Thư viện ảnh</h3>
+              <div className="mt-4 grid min-h-0 flex-1 grid-cols-4 gap-2 lg:grid-rows-2">
+                {galleryImagePaths.map((src, i) => (
+                  <div
+                    key={src}
+                    className="relative aspect-square min-h-0 overflow-hidden rounded-md lg:aspect-auto lg:h-full"
+                  >
+                    <Image src={src} alt={`Ảnh thư viện ${i + 1}`} fill sizes="120px" className="object-cover" quality={68} />
+                  </div>
+                ))}
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.05} className="flex min-h-0 flex-col lg:h-full">
+              <h3 className="shrink-0 font-heading text-xl text-[#2f2018] md:text-2xl">Video giới thiệu</h3>
+              <div className="relative mt-4 aspect-video w-full shrink-0 overflow-hidden rounded-lg border border-[#e0d6cc] bg-black shadow-sm ring-1 ring-[#7b1e1e]/10">
+                <iframe
+                  className="absolute inset-0 size-full"
+                  src="https://www.youtube.com/embed/GrkZOiMwdOQ"
+                  title="Video giới thiệu Huế Craft Village"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+              </div>
+              <p className="mt-3 text-xs text-[#5c4033]/75">
+                Video giới thiệu trên{" "}
+                <a
+                  href="https://www.youtube.com/watch?v=GrkZOiMwdOQ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center rounded-md border border-[#e0d6c9] bg-[#faf7f2] px-2 py-0.5 font-medium text-[#7b1e1e] underline-offset-2 transition hover:border-[#d4c4b0] hover:bg-white hover:underline"
+                >
+                  YouTube
+                </a>
+                .
+              </p>
+            </FadeIn>
+          </div>
         </div>
       </section>
 

@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "clean": "rimraf node_modules dist build .next",
     "preview:export": "npx --yes serve@14 out -l 3456",
     "lint": "eslint",
     "build:craft-bundles": "node scripts/build-craft-bundles.mjs"
@@ -31,6 +32,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "rimraf": "^6.0.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
