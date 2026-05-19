@@ -1,3 +1,7 @@
+/** Chatbot hướng nghiệp — NotebookLM (Huế Craft Village 4.0) */
+export const CAREER_CHATBOT_NOTEBOOK_URL =
+  "https://notebooklm.google.com/notebook/2f22d761-3918-4c8c-aff1-6c596bbb45fe?authuser=2";
+
 export const careerSteps = [
   "Khám phá bản thân",
   "Gợi ý nghề phù hợp",

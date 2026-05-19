@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   title: "Hue Craft Village | Làng nghề truyền thống Huế",
   description:
     "Hue Craft Village — khám phá làng nghề cố đô, trải nghiệm văn hóa, thư viện ảnh và định hướng nghề nghiệp.",
+  icons: { icon: "/images/logo/logo.png" },
 };
 
 export default function RootLayout({

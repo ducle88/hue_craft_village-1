@@ -1,3 +1,7 @@
+/** Chatbot khởi nghiệp — NotebookLM (Huế Craft Village 4.0) */
+export const STARTUP_CHATBOT_NOTEBOOK_URL =
+  "https://notebooklm.google.com/notebook/647c0971-d66d-466f-9c20-d87800d0923e?authuser=2&addSource=true";
+
 export const startupMessages = [
   { role: "ai", text: "Chào bạn, mình hỗ trợ lên ý tưởng khởi nghiệp từ làng nghề." },
   { role: "user", text: "Mình muốn kinh doanh quà tặng hoa giấy." },

@@ -3,15 +3,75 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Menu, Search } from "lucide-react";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { navItemHasChildren, prominentNavItemIsActive, siteNavProminentBar } from "@/lib/site";
+import {
+  navItemHasChildren,
+  navSubLinkIsActive,
+  prominentNavItemIsActive,
+  siteNavProminentBar,
+} from "@/lib/site";
+import { isExternalHref } from "@/lib/nav";
 import { cn } from "@/lib/utils";
+
+function NavSubMenuLink({
+  href,
+  className,
+  children,
+  onNavigate,
+  role,
+}: {
+  href: string;
+  className?: string;
+  children: ReactNode;
+  role?: string;
+  onNavigate?: () => void;
+}) {
+  if (isExternalHref(href)) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" role={role} className={className} onClick={onNavigate}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} role={role} className={className} onClick={onNavigate}>
+      {children}
+    </Link>
+  );
+}
 
 function navLinkClass(active: boolean) {
   return cn(
     "whitespace-nowrap px-2 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#4a362c] transition hover:text-[#7b1e1e] xl:px-2.5 xl:text-xs",
     active && "border-b-2 border-[#7b1e1e] text-[#7b1e1e]"
+  );
+}
+
+function dropdownGroupClass(dropdownId?: "career" | "startup") {
+  if (dropdownId === "career") return "group/career";
+  if (dropdownId === "startup") return "group/startup";
+  return "group/nav";
+}
+
+function dropdownPanelClass(dropdownId?: "career" | "startup") {
+  const base =
+    "invisible absolute left-0 top-full z-50 min-w-[min(22rem,calc(100vw-2rem))] max-w-[22rem] pt-1.5 opacity-0 transition-[opacity,visibility] duration-150";
+  if (dropdownId === "career") {
+    return cn(
+      base,
+      "group-hover/career:visible group-hover/career:opacity-100 group-focus-within/career:visible group-focus-within/career:opacity-100"
+    );
+  }
+  if (dropdownId === "startup") {
+    return cn(
+      base,
+      "group-hover/startup:visible group-hover/startup:opacity-100 group-focus-within/startup:visible group-focus-within/startup:opacity-100"
+    );
+  }
+  return cn(
+    base,
+    "group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:opacity-100"
   );
 }
 
@@ -46,37 +106,46 @@ export function MainNavbar() {
 
             if (navItemHasChildren(item)) {
               return (
-                <div key={item.href} className="group/tvhn relative">
+                <div key={item.href} className={cn("relative", dropdownGroupClass(item.dropdownId))}>
                   <div className="flex items-center gap-0.5">
                     <Link href={item.href} className={navLinkClass(active)}>
                       {item.label}
                     </Link>
                     <ChevronDown className="size-3 shrink-0 text-[#4a362c]/70" strokeWidth={2} aria-hidden />
                   </div>
-                  <div
-                    role="menu"
-                    className="invisible absolute left-0 top-full z-50 min-w-[min(22rem,calc(100vw-2rem))] max-w-[22rem] pt-1.5 opacity-0 transition-[opacity,visibility] duration-150 group-hover/tvhn:visible group-hover/tvhn:opacity-100 group-focus-within/tvhn:visible group-focus-within/tvhn:opacity-100"
-                  >
+                  <div role="menu" className={dropdownPanelClass(item.dropdownId)}>
                     <div className="rounded-md border border-[#e5d9c8] bg-[#fffaf6] py-1.5 shadow-lg">
                       {item.showOverviewInDropdown ? (
                         <Link
                           href={item.href}
                           role="menuitem"
-                          className="block border-b border-[#e5d9c8]/80 px-3 py-2 text-left text-[13px] font-semibold normal-case leading-snug tracking-normal text-[#7b1e1e] hover:bg-[#f0e8dc]"
+                          className={cn(
+                            "block border-b border-[#e5d9c8]/80 px-3 py-2 text-left text-[13px] font-semibold normal-case leading-snug tracking-normal hover:bg-[#f0e8dc]",
+                            navSubLinkIsActive(item.href, pathname)
+                              ? "bg-[#f0e8dc] text-[#7b1e1e]"
+                              : "text-[#7b1e1e]"
+                          )}
                         >
                           Tổng quan
                         </Link>
                       ) : null}
-                      {item.children.map((sub) => (
-                        <Link
-                          key={sub.href}
-                          href={sub.href}
-                          role="menuitem"
-                          className="block px-3 py-2 text-left text-[13px] font-medium normal-case leading-snug tracking-normal text-[#4a362c] hover:bg-[#f0e8dc] hover:text-[#7b1e1e]"
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
+                      {item.children.map((sub) => {
+                        const subActive = !isExternalHref(sub.href) && navSubLinkIsActive(sub.href, pathname);
+                        return (
+                          <NavSubMenuLink
+                            key={sub.href}
+                            href={sub.href}
+                            role="menuitem"
+                            className={cn(
+                              "block px-3 py-2 text-left text-[13px] font-medium normal-case leading-snug tracking-normal hover:bg-[#f0e8dc] hover:text-[#7b1e1e]",
+                              subActive ? "bg-[#efe5d8] text-[#7b1e1e]" : "text-[#4a362c]"
+                            )}
+                          >
+                            {sub.label}
+                            {isExternalHref(sub.href) ? " ↗" : null}
+                          </NavSubMenuLink>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -147,16 +216,23 @@ export function MainNavbar() {
                           Tổng quan
                         </Link>
                       ) : null}
-                      {item.children.map((sub) => (
-                        <Link
-                          key={sub.href}
-                          href={sub.href}
-                          className="rounded-md py-1.5 pr-2 text-left text-[13px] font-medium normal-case leading-snug tracking-normal text-[#5c4033] hover:bg-[#efe5d8] hover:text-[#2f2018]"
-                          onClick={() => setOpen(false)}
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
+                      {item.children.map((sub) => {
+                        const subActive = !isExternalHref(sub.href) && navSubLinkIsActive(sub.href, pathname);
+                        return (
+                          <NavSubMenuLink
+                            key={sub.href}
+                            href={sub.href}
+                            className={cn(
+                              "rounded-md py-1.5 pr-2 text-left text-[13px] font-medium normal-case leading-snug tracking-normal hover:bg-[#efe5d8] hover:text-[#2f2018]",
+                              subActive ? "bg-[#efe5d8] font-semibold text-[#7b1e1e]" : "text-[#5c4033]"
+                            )}
+                            onNavigate={() => setOpen(false)}
+                          >
+                            {sub.label}
+                            {isExternalHref(sub.href) ? " ↗" : null}
+                          </NavSubMenuLink>
+                        );
+                      })}
                     </div>
                   </div>
                 );

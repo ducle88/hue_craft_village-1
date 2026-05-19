@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Search } from "lucide-react";
+import { getVillageGalleryMoments } from "@/data/craft-village-galleries";
+import { getVillageArtisanSummary } from "@/data/village-artisan-summaries";
 import { villages } from "@/data/villages";
 import { FadeIn } from "@/components/shared/fade-in";
 
@@ -22,8 +24,11 @@ export default function VillagesPage() {
       </FadeIn>
 
       <div className="mt-10 space-y-10">
-        {villages.map((v, idx) => (
-          <FadeIn key={v.slug} delay={idx * 0.06} className="card-luxury overflow-hidden">
+        {villages.map((v, idx) => {
+          const moments = getVillageGalleryMoments(v.slug, v.gallery);
+
+          return (
+            <FadeIn key={v.slug} delay={idx * 0.06} className="card-luxury overflow-hidden">
             <div className="grid lg:grid-cols-[minmax(0,380px)_1fr]">
               <div className="relative min-h-56 w-full lg:min-h-[420px]">
                 <Image src={v.image} alt={v.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 380px" priority={idx === 0} />
@@ -43,7 +48,9 @@ export default function VillagesPage() {
                 <div className="grid gap-6 border-t border-[#d9c8b2]/80 pt-6 sm:grid-cols-2">
                   <div>
                     <h3 className="font-heading text-xl text-[#2f2018]">Nghệ nhân tiêu biểu</h3>
-                    <p className="mt-3 text-[#5c4033]/85">{v.artisan}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-[#5c4033]/85">
+                      {getVillageArtisanSummary(v.slug)}
+                    </p>
                     <p className="mt-2 text-sm font-semibold text-[#7b1e1e]">{v.years}</p>
                   </div>
                   <div>
@@ -62,15 +69,21 @@ export default function VillagesPage() {
                 <div className="border-t border-[#d9c8b2]/80 pt-6">
                   <h3 className="font-heading text-xl text-[#2f2018]">Hình ảnh & khoảnh khắc</h3>
                   <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {v.gallery.map((caption, gIdx) => (
+                    {moments.map((moment, gIdx) => (
                       <div
-                        key={`${v.slug}-${caption}`}
+                        key={`${v.slug}-moment-${gIdx}`}
                         className="overflow-hidden rounded-xl border border-[#d9c8b2] bg-white/70 p-3 shadow-sm"
                       >
                         <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-                          <Image src={v.image} alt={caption} fill className="object-cover" sizes="(max-width: 640px) 100vw, 200px" />
+                          <Image
+                            src={moment.src || v.image}
+                            alt={moment.alt}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 640px) 100vw, 200px"
+                          />
                         </div>
-                        <p className="mt-2 text-sm text-[#5c4033]/85">{caption}</p>
+                        <p className="mt-2 text-sm text-[#5c4033]/85">{moment.caption}</p>
                         <p className="text-xs text-[#7b1e1e]/90">Khoảnh khắc {gIdx + 1}</p>
                       </div>
                     ))}
@@ -87,8 +100,9 @@ export default function VillagesPage() {
                 </div>
               </div>
             </div>
-          </FadeIn>
-        ))}
+            </FadeIn>
+          );
+        })}
       </div>
     </div>
   );

@@ -12,8 +12,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { villages } from "@/data/villages";
 import { events } from "@/data/events";
-import { homeFeaturedExtraCrafts } from "@/data/home-spotlight-crafts";
 import { FadeIn } from "@/components/shared/fade-in";
+import { CAREER_CHATBOT_NOTEBOOK_URL } from "@/data/chatbot";
+import { STARTUP_CHATBOT_NOTEBOOK_URL } from "@/data/startup";
 import { navItemHasChildren, siteNavProminentBar } from "@/lib/site";
 import { galleryImagePaths } from "@/data/gallery";
 
@@ -57,24 +58,14 @@ export function HomePage() {
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
 
-  const featuredCards = [
-    ...villages.map((v) => ({
-      id: v.slug,
-      name: v.name,
-      description: v.shortDescription,
-      image: v.image,
-      href: `/lang-nghe/${v.slug}`,
-      external: false,
-    })),
-    ...homeFeaturedExtraCrafts.map((c) => ({
-      id: `extra-${c.name}`.replace(/\s+/g, "-").toLowerCase(),
-      name: c.name,
-      description: c.description,
-      image: c.image,
-      href: c.href,
-      external: Boolean(c.external),
-    })),
-  ];
+  const featuredCards = villages.map((v) => ({
+    id: v.slug,
+    name: v.name,
+    description: v.shortDescription,
+    image: v.image,
+    href: `/lang-nghe/${v.slug}`,
+    external: false,
+  }));
 
   const syncFeaturedArrows = useCallback(() => {
     const el = featuredScrollRef.current;
@@ -320,12 +311,14 @@ export function HomePage() {
               >
                 Tìm hiểu thêm
               </Link>
-              <Link
-                href="/chatbot-huong-nghiep"
+              <a
+                href={CAREER_CHATBOT_NOTEBOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex flex-1 items-center justify-center bg-[#7b1e1e] py-3 text-center text-sm font-semibold uppercase tracking-[0.12em] text-[#f5efe6] transition hover:bg-[#6a1818]"
               >
-                Chatbot AI
-              </Link>
+                Chatbot AI ↗
+              </a>
             </div>
           </FadeIn>
 
@@ -369,12 +362,14 @@ export function HomePage() {
               >
                 Tìm hiểu thêm
               </Link>
-              <Link
-                href="/chatbot-khoi-nghiep"
+              <a
+                href={STARTUP_CHATBOT_NOTEBOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex flex-1 items-center justify-center bg-[#0B8CB4] py-3 text-center text-sm font-semibold uppercase tracking-[0.12em] text-[#f5efe6] transition hover:bg-[#086b8d]"
               >
-                Chatbot AI
-              </Link>
+                Chatbot AI ↗
+              </a>
             </div>
           </FadeIn>
         </div>

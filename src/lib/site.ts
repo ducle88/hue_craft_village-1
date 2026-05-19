@@ -1,3 +1,8 @@
+import { CAREER_CHATBOT_NOTEBOOK_URL } from "@/data/chatbot";
+import { careerCounselingNavItems } from "@/data/career-counseling/pages";
+import { STARTUP_CHATBOT_NOTEBOOK_URL } from "@/data/startup";
+import { startupGuideNavItems } from "@/data/startup-counseling/pages";
+
 export type NavLink = {
   label: string;
   href: string;
@@ -7,6 +12,8 @@ export type NavItemWithChildren = NavLink & {
   children: NavLink[];
   /** false: dropdown/accordion chỉ hiển thị children, không thêm dòng “Tổng quan” */
   showOverviewInDropdown?: boolean;
+  /** Tên nhóm Tailwind `group/*` — mỗi dropdown cần id riêng để hover không chồng lên nhau */
+  dropdownId?: "career" | "startup";
 };
 
 export type NavItem = NavLink | NavItemWithChildren;
@@ -35,6 +42,13 @@ export function prominentNavItemIsActive(item: ProminentNavItem, pathname: strin
   return pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
 }
 
+/** Active cho từng mục con trong dropdown menu chính */
+export function navSubLinkIsActive(href: string, pathname: string): boolean {
+  const [pathOnly, hash] = href.split("#");
+  if (hash) return pathname === pathOnly;
+  return pathname === pathOnly;
+}
+
 /** Menu ngang kiểu landing (mockup HUE CRAFT VILLAGE) */
 export const siteNavProminentBar = [
   { label: "Trang chủ", href: "/" },
@@ -43,21 +57,21 @@ export const siteNavProminentBar = [
   {
     label: "Tư Vấn Hướng Nghiệp",
     href: "/tu-van-huong-nghiep",
+    dropdownId: "career",
+    showOverviewInDropdown: true,
     children: [
-      { label: "Tầm quan trọng của việc chọn nghề", href: "/tu-van-huong-nghiep#tam-quan-trong" },
-      { label: "Quy trình tư vấn hướng nghiệp", href: "/tu-van-huong-nghiep#quy-trinh" },
-      { label: "Trắc nghiệm hướng nghiệp", href: "/tu-van-huong-nghiep#trac-nghiem" },
-      { label: "Chatbot hỗ trợ tư vấn, định hướng nghề nghiệp", href: "/chatbot-huong-nghiep" },
-      { label: "Các website tư vấn hướng nghiệp", href: "/tu-van-huong-nghiep#website-tham-khao" },
+      ...careerCounselingNavItems,
+      { label: "Mở Chatbot AI hướng nghiệp", href: CAREER_CHATBOT_NOTEBOOK_URL },
     ],
   },
   {
     label: "Chuyên mục khởi nghiệp",
     href: "/khoi-nghiep",
+    dropdownId: "startup",
+    showOverviewInDropdown: true,
     children: [
-      { label: "Quy trình khởi nghiệp", href: "/khoi-nghiep#quy-trinh" },
-      { label: "Tài liệu Khởi nghiệp", href: "/khoi-nghiep#tai-lieu" },
-      { label: "Chatbot hỗ trợ tư vấn khởi nghiệp", href: "/chatbot-khoi-nghiep" },
+      ...startupGuideNavItems,
+      { label: "Mở Chatbot AI khởi nghiệp", href: STARTUP_CHATBOT_NOTEBOOK_URL },
     ],
   },
   { label: "Thư viện", href: "/thu-vien-anh" },
@@ -90,21 +104,21 @@ export const siteNavExplore = {
 export const siteNavSpotlight: SpotlightNavItem[] = [
   {
     label: "Tư vấn hướng nghiệp",
-    href: "/chatbot-huong-nghiep",
+    href: CAREER_CHATBOT_NOTEBOOK_URL,
     tone: "burgundy",
     showOverviewInDropdown: false,
     children: [
-      { label: "Chatbot AI hướng nghiệp", href: "/chatbot-huong-nghiep" },
+      { label: "Chatbot AI hướng nghiệp", href: CAREER_CHATBOT_NOTEBOOK_URL },
       { label: "Nội dung & quy trình tư vấn", href: "/tu-van-huong-nghiep" },
     ],
   },
   {
     label: "Khởi nghiệp",
-    href: "/chatbot-khoi-nghiep",
+    href: STARTUP_CHATBOT_NOTEBOOK_URL,
     tone: "forest",
     showOverviewInDropdown: false,
     children: [
-      { label: "Chatbot AI khởi nghiệp", href: "/chatbot-khoi-nghiep" },
+      { label: "Chatbot AI khởi nghiệp", href: STARTUP_CHATBOT_NOTEBOOK_URL },
       { label: "Quy trình & tài liệu", href: "/khoi-nghiep" },
     ],
   },

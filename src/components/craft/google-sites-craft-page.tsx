@@ -126,31 +126,19 @@ export function GoogleSitesCraftPage({ bundle }: Props) {
       ) : null}
 
       <FadeIn className="card-luxury p-6 md:p-8" delay={0.15}>
-        <h2 className="font-heading text-2xl text-[#2f2018] md:text-3xl">Bản đồ & đa phương tiện</h2>
+        <h2 className="font-heading text-2xl text-[#2f2018] md:text-3xl">Thư viện</h2>
         <p className="mt-2 text-sm leading-relaxed text-[#5c4033]/75">
-          Bản đồ nhúng theo địa danh trong bài. Thư viện ảnh bên dưới là các tệp hình đã lưu trong dự án website (không tải từ Google Sites khi xem trang).
+          Video và ảnh minh họa từ dự án Huế Craft Village 4.0 — lưu trong mã nguồn website, không tải từ Google Sites khi bạn xem trang.
         </p>
 
-        <h3 className="font-heading mt-8 text-xl text-[#5c4033]">Bản đồ</h3>
-        <div className="mt-3 overflow-hidden rounded-xl border border-[#d9c8b2] bg-[#efe5d8] shadow-inner">
-          <iframe
-            title={`Bản đồ: ${b.pageTitle}`}
-            src={embedSrc}
-            className="aspect-video w-full min-h-[260px] border-0 md:min-h-[320px]"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
-        </div>
-        <a href={openHref} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm font-semibold text-[#7b1e1e] underline-offset-4 hover:underline">
-          Mở trong Google Maps ↗
-        </a>
-
-        <h3 className="font-heading mt-10 text-xl text-[#5c4033]">Video</h3>
+        <h3 className="font-heading mt-8 text-xl text-[#5c4033]">Video</h3>
         {b.youtubeEmbeds.length > 0 ? (
-          <div className="mt-4 space-y-6">
+          <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-2">
             {b.youtubeEmbeds.map((vid) => (
-              <div key={vid.videoId} className="overflow-hidden rounded-xl border border-[#d9c8b2]">
+              <div
+                key={vid.videoId}
+                className={`overflow-hidden rounded-xl border border-[#d9c8b2]${b.youtubeEmbeds.length === 1 ? " lg:col-span-2 lg:mx-auto lg:max-w-3xl lg:w-full" : ""}`}
+              >
                 <div className="aspect-video w-full">
                   <iframe
                     title={vid.title}
@@ -172,40 +160,50 @@ export function GoogleSitesCraftPage({ bundle }: Props) {
           </div>
         )}
 
-        <h3 className="font-heading mt-10 text-xl text-[#5c4033]">Thư viện ảnh minh họa</h3>
+        <h3 className="font-heading mt-10 text-xl text-[#5c4033]">Ảnh</h3>
         {b.galleryFromSource.length > 0 ? (
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {b.galleryFromSource.map((img, i) => (
-            <div key={img.src} className="overflow-hidden rounded-xl border border-[#d9c8b2] bg-white/70 p-2 shadow-sm">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-                <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="(max-width: 640px) 100vw, 33vw" />
-              </div>
-              <p className="mt-2 px-1 text-xs text-[#5c4033]/70">Ảnh {i + 1} — Huế Craft Village 4.0 (lưu trong dự án)</p>
-            </div>
-          ))}
-        </div>
-        ) : (
-          <p className="mt-3 text-sm text-[#5c4033]/75">Chưa có ảnh minh họa trong bundle — chạy lại script build craft hoặc thêm tệp vào <code className="rounded bg-[#efe5d8] px-1 text-xs">public/images/crafts/</code>.</p>
-        )}
-      </FadeIn>
-
-      {village ? (
-        <FadeIn className="card-luxury p-6 md:p-8" delay={0.16}>
-          <h2 className="font-heading text-2xl text-[#2f2018] md:text-3xl">Minh họa trên website</h2>
-          <p className="mt-2 text-sm text-[#5c4033]/75">Ảnh đại diện và gợi ý khoảnh khắc từ bộ sưu tập nội bộ.</p>
-          <div className="mt-4 grid gap-4 sm:grid-cols-3">
-            {village.gallery.map((caption, index) => (
-              <div key={caption} className="overflow-hidden rounded-xl border border-[#d9c8b2] bg-white/70 p-3">
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {b.galleryFromSource.map((img, i) => (
+              <div key={img.src} className="overflow-hidden rounded-xl border border-[#d9c8b2] bg-white/70 p-2 shadow-sm">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-                  <Image src={village.image} alt={caption} fill className="object-cover" sizes="(max-width: 640px) 100vw, 200px" />
+                  <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="(max-width: 640px) 100vw, 33vw" />
                 </div>
-                <p className="mt-2 text-sm text-[#5c4033]/85">{caption}</p>
-                <p className="text-xs text-[#7b1e1e]">Khoảnh khắc {index + 1}</p>
+                <p className="mt-2 px-1 text-xs text-[#5c4033]/70">Ảnh {i + 1} — Huế Craft Village 4.0 (lưu trong dự án)</p>
               </div>
             ))}
           </div>
-        </FadeIn>
-      ) : null}
+        ) : (
+          <p className="mt-3 text-sm text-[#5c4033]/75">
+            Chưa có ảnh minh họa trong bundle — chạy lại script build craft hoặc thêm tệp vào{" "}
+            <code className="rounded bg-[#efe5d8] px-1 text-xs">public/images/crafts/</code>.
+          </p>
+        )}
+      </FadeIn>
+
+      <FadeIn className="card-luxury p-6 md:p-8" delay={0.155}>
+        <h2 className="font-heading text-2xl text-[#2f2018] md:text-3xl">Bản đồ</h2>
+        <p className="mt-2 text-sm leading-relaxed text-[#5c4033]/75">
+          Bản đồ nhúng theo địa danh trong bài (tìm kiếm trên Google Maps).
+        </p>
+        <div className="mt-6 overflow-hidden rounded-xl border border-[#d9c8b2] bg-[#efe5d8] shadow-inner">
+          <iframe
+            title={`Bản đồ: ${b.pageTitle}`}
+            src={embedSrc}
+            className="aspect-video w-full min-h-[260px] border-0 md:min-h-[320px]"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        </div>
+        <a
+          href={openHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 inline-block text-sm font-semibold text-[#7b1e1e] underline-offset-4 hover:underline"
+        >
+          Mở trong Google Maps ↗
+        </a>
+      </FadeIn>
 
       <FadeIn className="card-luxury border border-[#d9c8b2] bg-[#faf7f2] p-6 text-sm text-[#5c4033]/85" delay={0.18}>
         <p className="font-semibold text-[#2f2018]">Ghi nhận nội dung dự án</p>

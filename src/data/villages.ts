@@ -5,7 +5,6 @@ export type Village = {
   image: string;
   shortDescription: string;
   description: string;
-  artisan: string;
   years: string;
   hero: string;
   gallery: string[];
@@ -21,25 +20,10 @@ export const villages: Village[] = [
     shortDescription: "Sắc hương cổ kính nhuộm tím ký ức đất Cố đô.",
     description:
       "Nghề làm hương ở Thủy Xuân lưu giữ kỹ thuật pha trầm, se hương và phối sắc thủ công, tạo nên không gian tâm linh đậm chất Huế.",
-    artisan: "Nghệ nhân Trần Thị Huệ",
     years: "Hơn 700 năm",
     hero: "linear-gradient(120deg, rgba(123,30,30,0.8), rgba(92,64,51,0.62))",
     gallery: ["Sân hương nhiều màu", "Se tăm hương", "Nhuộm màu tự nhiên"],
     experiences: ["Se hương thủ công", "Pha hương theo mùi", "Gói hương lễ"],
-  },
-  {
-    slug: "non-la-phu-cam",
-    name: "Nón lá Phú Cam",
-    category: "Thủ công mỹ nghệ",
-    image: "/images/villages/non-la-phu-cam.png",
-    shortDescription: "Tinh xảo trong từng lớp lá, nhẹ như thơ xứ Huế.",
-    description:
-      "Nghề chằm nón lá Phú Cam nổi tiếng bởi kỹ thuật lên khung chuẩn, ép lá mượt và thêu họa tiết thanh nhã mang hồn cung đình.",
-    artisan: "Nghệ nhân Nguyễn Thị Lan",
-    years: "Hơn 300 năm",
-    hero: "linear-gradient(120deg, rgba(200,169,107,0.8), rgba(92,64,51,0.64))",
-    gallery: ["Chằm vành nón", "Sấy lá", "Thêu họa tiết"],
-    experiences: ["Chằm 1 chiếc nón mini", "Vẽ hoa văn", "Trải nghiệm áo dài nón lá"],
   },
   {
     slug: "gom-phuoc-tich",
@@ -49,7 +33,6 @@ export const villages: Village[] = [
     shortDescription: "Đất nung kể chuyện thời gian bên dòng Ô Lâu.",
     description:
       "Phước Tích gìn giữ lò gốm cổ với quy trình nhào đất, xoay bàn và nung củi, tạo nên chất gốm mộc mạc nhưng bền chắc.",
-    artisan: "Nghệ nhân Lương Thanh Hiển và cộng đồng gìn giữ lò gốm",
     years: "Trên 500 năm",
     hero: "linear-gradient(120deg, rgba(92,64,51,0.82), rgba(123,30,30,0.58))",
     gallery: ["Lò nung cổ", "Nặn gốm", "Tô men"],
@@ -63,7 +46,6 @@ export const villages: Village[] = [
     shortDescription: "Sắc hoa giấy rực rỡ trong lễ nghi truyền thống Huế.",
     description:
       "Nghề hoa giấy Thanh Tiên mang vẻ đẹp tượng trưng cho phúc lành, được tạo tác hoàn toàn thủ công với kỹ thuật nhuộm và xếp cánh tinh tế.",
-    artisan: "Phan Thị Thanh, Nguyễn Hoá và cộng đồng nghệ nhân trong làng",
     years: "Khoảng 300–400 năm; công nhận làng nghề truyền thống (2013)",
     hero: "linear-gradient(120deg, rgba(123,30,30,0.78), rgba(200,169,107,0.66))",
     gallery: ["Xếp cánh hoa", "Nhuộm giấy", "Trưng bày lễ hội"],
@@ -77,7 +59,6 @@ export const villages: Village[] = [
     shortDescription: "Hoa văn dệt thổ cẩm Tà Ôi — di sản phi vật thể quốc gia.",
     description:
       "Dèng A Lưới gắn với đời sống cộng đồng dân tộc thiểu số ở vùng núi phía Tây Huế, nổi bật với kỹ thuật dệt tay và trang trí hạt cườm đặc trưng.",
-    artisan: "Nghệ nhân Mai Thị Hợp và các làng nghề A Hừa, A Đớt",
     years: "Hàng trăm năm; Di sản văn hóa phi vật thể quốc gia (2016)",
     hero: "linear-gradient(120deg, rgba(47,32,24,0.85), rgba(123,30,30,0.55))",
     gallery: ["Khung dệt tay", "Màu nhuộm thiên nhiên", "Thổ cẩm hoàn thiện"],
@@ -91,7 +72,6 @@ export const villages: Village[] = [
     shortDescription: "Dòng tranh mộc bản đặc sắc gắn tín ngưỡng xứ Huế.",
     description:
       "Tranh làng Sình (Lại Ân) là nghệ thuật in mộc bản với màu điệp tự nhiên, phục vụ lễ cúng, cầu an và đời sống văn hóa dân gian cố đô.",
-    artisan: "Nghệ nhân Kỳ Hữu Phước và thế hệ kế thừa",
     years: "Hơn 400 năm",
     hero: "linear-gradient(120deg, rgba(123,30,30,0.75), rgba(92,64,51,0.65))",
     gallery: ["Khắc mộc bản", "In tranh", "Phối màu điệp"],
@@ -105,7 +85,6 @@ export const villages: Village[] = [
     shortDescription: "Quạt giấy thanh tao bên dòng Hương Giang.",
     description:
       "Nghề làm quạt giấy ở phố cổ Bao Vinh lưu giữ kỹ thuật nan tre, dán áo quạt và họa tiết thư pháp — biểu tượng tinh tế của người Huế.",
-    artisan: "Nghệ nhân Nguyễn Thị Lộc và các hộ làm quạt truyền thống",
     years: "Truyền thống lâu đời gắn thương cảng xứ Huế",
     hero: "linear-gradient(120deg, rgba(92,64,51,0.82), rgba(200,169,107,0.6))",
     gallery: ["Vót nan tre", "Dán áo quạt", "Vẽ họa tiết"],
@@ -119,7 +98,6 @@ export const villages: Village[] = [
     shortDescription: "Lọng lụa gấm — nét uy nghi của di sản cung đình.",
     description:
       "Nghề làm lọng cung đình Huế gắn với nghi lễ, lễ hội và tín ngưỡng, với khung tre uốn, gen gỗ và vải gấm thêu rồng phượng.",
-    artisan: "Nghệ nhân Ưu tú Hoàng Ngọc Tuyên (Tre mỹ nghệ Ngọc Tuyên)",
     years: "Từ thời Lê — Mạc; phát triển mạnh thời Nguyễn",
     hero: "linear-gradient(120deg, rgba(200,169,107,0.78), rgba(123,30,30,0.62))",
     gallery: ["Chế nan tre", "Phủ lụa gấm", "Hoàn thiện tua rua"],

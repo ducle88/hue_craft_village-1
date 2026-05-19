@@ -166,15 +166,63 @@ export default function HoaGiayThanhTienPage() {
       </FadeIn>
 
       <FadeIn className="card-luxury p-6 md:p-8" delay={0.145}>
-        <h2 className="font-heading text-2xl text-[#2f2018] md:text-3xl">Bản đồ & đa phương tiện</h2>
+        <h2 className="font-heading text-2xl text-[#2f2018] md:text-3xl">Thư viện</h2>
         <p className="mt-2 text-sm leading-relaxed text-[#5c4033]/75">
-          Bản đồ nhúng theo địa danh trong bài (Phường Dương Nỗ / làng hoa giấy Thanh Tiên). Ảnh dưới đây là tệp lưu trong dự án website (thư viện chi tiết có thể mở rộng trong{" "}
+          Video và ảnh minh họa lưu trong dự án website (thư viện chi tiết có thể mở rộng trong{" "}
           <code className="rounded bg-[#efe5d8] px-1 text-xs">public/images/crafts/hoa-giay-thanh-tien/</code>
           ).
         </p>
 
-        <h3 className="font-heading mt-8 text-xl text-[#5c4033]">Bản đồ</h3>
-        <div className="mt-3 overflow-hidden rounded-xl border border-[#d9c8b2] bg-[#efe5d8] shadow-inner">
+        <h3 className="font-heading mt-8 text-xl text-[#5c4033]">Video</h3>
+        {m.youtubeEmbeds.length > 0 ? (
+          <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {m.youtubeEmbeds.map((vid) => (
+              <div
+                key={vid.videoId}
+                className={`overflow-hidden rounded-xl border border-[#d9c8b2]${m.youtubeEmbeds.length === 1 ? " lg:col-span-2 lg:mx-auto lg:max-w-3xl lg:w-full" : ""}`}
+              >
+                <div className="aspect-video w-full">
+                  <iframe
+                    title={vid.title}
+                    src={`https://www.youtube-nocookie.com/embed/${vid.videoId}`}
+                    className="h-full w-full border-0"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+                <p className="border-t border-[#d9c8b2] bg-white/70 px-4 py-2 text-sm text-[#5c4033]/85">{vid.title}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-4 rounded-lg border border-[#d9c8b2] bg-white/60 p-4 text-sm leading-relaxed text-[#5c4033]/85">
+            Trang gốc có thể có mục <strong className="text-[#2f2018]">Embedded Files</strong> nhưng ID YouTube không xuất hiện trong HTML tĩnh khi tải trang.
+            Khi có ID video YouTube cố định, thêm vào{" "}
+            <code className="rounded bg-[#efe5d8] px-1 text-xs">youtubeEmbeds</code> trong{" "}
+            <code className="rounded bg-[#efe5d8] px-1 text-xs">src/data/hoa-giay-thanh-tien.ts</code> để hiển thị nhúng tại đây.
+          </div>
+        )}
+
+        <h3 className="font-heading mt-10 text-xl text-[#5c4033]">Ảnh</h3>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {m.galleryFromSource.map((img, i) => (
+            <div key={`${img.src}-${i}`} className="overflow-hidden rounded-xl border border-[#d9c8b2] bg-white/70 p-2 shadow-sm">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+                <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="(max-width: 640px) 100vw, 33vw" />
+              </div>
+              <p className="mt-2 px-1 text-xs text-[#5c4033]/70">Ảnh {i + 1} — Huế Craft Village 4.0 (lưu trong dự án)</p>
+            </div>
+          ))}
+        </div>
+      </FadeIn>
+
+      <FadeIn className="card-luxury p-6 md:p-8" delay={0.15}>
+        <h2 className="font-heading text-2xl text-[#2f2018] md:text-3xl">Bản đồ</h2>
+        <p className="mt-2 text-sm leading-relaxed text-[#5c4033]/75">
+          Bản đồ nhúng theo địa danh trong bài (Phường Dương Nỗ / làng hoa giấy Thanh Tiên).
+        </p>
+        <div className="mt-6 overflow-hidden rounded-xl border border-[#d9c8b2] bg-[#efe5d8] shadow-inner">
           <iframe
             title="Bản đồ làng hoa giấy Thanh Tiên, Huế"
             src={m.mapEmbedUrl}
@@ -192,64 +240,6 @@ export default function HoaGiayThanhTienPage() {
         >
           Mở trong Google Maps ↗
         </a>
-
-        <h3 className="font-heading mt-10 text-xl text-[#5c4033]">Video</h3>
-        {m.youtubeEmbeds.length > 0 ? (
-          <div className="mt-4 space-y-6">
-            {m.youtubeEmbeds.map((vid) => (
-              <div key={vid.videoId} className="overflow-hidden rounded-xl border border-[#d9c8b2]">
-                <div className="aspect-video w-full">
-                  <iframe
-                    title={vid.title}
-                    src={`https://www.youtube-nocookie.com/embed/${vid.videoId}`}
-                    className="h-full w-full border-0"
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                </div>
-                <p className="border-t border-[#d9c8b2] bg-white/70 px-4 py-2 text-sm text-[#5c4033]/85">{vid.title}</p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="mt-4 rounded-lg border border-[#d9c8b2] bg-white/60 p-4 text-sm leading-relaxed text-[#5c4033]/85">
-            Trang gốc có thể có mục <strong className="text-[#2f2018]">Embedded Files</strong> nhưng ID YouTube không xuất hiện
-            trong HTML tĩnh khi tải trang. Khi có ID video YouTube cố định, thêm vào{" "}
-            <code className="rounded bg-[#efe5d8] px-1 text-xs">youtubeEmbeds</code> trong{" "}
-            <code className="rounded bg-[#efe5d8] px-1 text-xs">src/data/hoa-giay-thanh-tien.ts</code> để hiển thị nhúng tại đây.
-          </div>
-        )}
-
-        <h3 className="font-heading mt-10 text-xl text-[#5c4033]">Thư viện ảnh minh họa</h3>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {m.galleryFromSource.map((img, i) => (
-            <div key={`${img.src}-${i}`} className="overflow-hidden rounded-xl border border-[#d9c8b2] bg-white/70 p-2 shadow-sm">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-                <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="(max-width: 640px) 100vw, 33vw" />
-              </div>
-              <p className="mt-2 px-1 text-xs text-[#5c4033]/70">
-                Ảnh {i + 1} — Huế Craft Village 4.0 (lưu trong dự án)
-              </p>
-            </div>
-          ))}
-        </div>
-      </FadeIn>
-
-      <FadeIn className="card-luxury p-6 md:p-8" delay={0.16}>
-        <h2 className="font-heading text-2xl text-[#2f2018] md:text-3xl">Minh họa trên website</h2>
-        <p className="mt-2 text-sm text-[#5c4033]/75">Ảnh đại diện và gợi ý khoảnh khắc từ bộ sưu tập nội bộ.</p>
-        <div className="mt-4 grid gap-4 sm:grid-cols-3">
-          {village.gallery.map((caption, index) => (
-            <div key={caption} className="overflow-hidden rounded-xl border border-[#d9c8b2] bg-white/70 p-3">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-                <Image src={village.image} alt={caption} fill className="object-cover" sizes="(max-width: 640px) 100vw, 200px" />
-              </div>
-              <p className="mt-2 text-sm text-[#5c4033]/85">{caption}</p>
-              <p className="text-xs text-[#7b1e1e]">Khoảnh khắc {index + 1}</p>
-            </div>
-          ))}
-        </div>
       </FadeIn>
 
       <FadeIn className="card-luxury border border-[#d9c8b2] bg-[#faf7f2] p-6 text-sm text-[#5c4033]/85" delay={0.18}>

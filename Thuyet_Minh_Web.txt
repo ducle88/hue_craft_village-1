@@ -1,0 +1,468 @@
+================================================================================
+                    THUYẾT MINH DỰ ÁN WEBSITE
+              HUE CRAFT VILLAGE — LÀNG NGHỀ HUẾ
+================================================================================
+
+I. TỔNG QUAN DỰ ÁN
+--------------------------------------------------------------------------------
+
+Tên dự án     : Hue Craft Village (Làng Nghề Huế)
+Loại sản phẩm : Website giới thiệu — ứng dụng web tĩnh (Static Web App)
+
+    * Web Application (ứng dụng web): phần mềm chạy trên trình duyệt (Chrome,
+      Edge, Firefox…), người dùng truy cập qua địa chỉ website, không cần cài
+      file .exe như phần mềm máy tính.
+    * Static Web App (web tĩnh): các trang HTML đã được tạo sẵn khi “đóng gói”
+      dự án; máy chủ chỉ gửi file cho trình duyệt, không xử lý logic phức tạp
+      mỗi lần người dùng vào trang.
+
+Mục đích      : Xây dựng không gian số tôn vinh làng nghề truyền thống Huế,
+                giới thiệu di sản văn hóa, trải nghiệm làng nghề, hướng nghiệp
+                và khởi nghiệp cho thế hệ trẻ.
+
+Website cung cấp thông tin về các làng nghề nổi tiếng (hương Thủy Xuân, nón lá
+Phú Cam, gốm Phước Tích, hoa giấy Thanh Tiên, dệt Dèng A Lưới, quạt giấy Bao
+Vinh, tranh làng Sình, lọng Cung Đình…), thư viện ảnh, tin tức — sự kiện,
+cùng các chuyên mục tư vấn hướng nghiệp và khởi nghiệp (có giao diện chatbot
+minh họa).
+
+    * Chatbot (trợ lý hội thoại): giao diện giống cửa sổ chat, mô phỏng trợ
+      lý trả lời câu hỏi;
+
+Đối tượng sử dụng: Học sinh, sinh viên, du khách, người yêu văn hóa Huế và
+cộng đồng quan tâm đến nghề truyền thống.
+
+
+II. LOẠI ỨNG DỤNG VÀ MÔ HÌNH TRIỂN KHAI
+--------------------------------------------------------------------------------
+
+2.1. Loại ứng dụng
+
+    - Single-Page Application — SPA (ứng dụng một trang):
+      Khi chuyển giữa các mục menu, trình duyệt không tải lại toàn bộ trang
+      như website cổ; React chỉ thay đổi phần nội dung cần thiết, giúp cảm
+      giác mượt, nhanh.
+
+    - React (thư viện giao diện):
+      Công cụ của Meta (Facebook) để xây dựng giao diện bằng các “component”
+      (khối giao diện nhỏ, tái sử dụng được — ví dụ: thanh menu, nút bấm, thẻ
+      làng nghề).
+
+    - Next.js (framework — khung phát triển web):
+      Bộ công cụ xây trên React, hỗ trợ tạo nhiều trang (routing), tối ưu ảnh,
+      font, và xuất website tĩnh. “App Router” là cách Next.js phiên bản mới
+      quy ước: mỗi thư mục trong src/app/ tương ứng một đường dẫn URL.
+
+    - Static Site Generation — SSG (sinh trang tĩnh):
+      Khi chạy lệnh build, Next.js tạo sẵn file HTML cho từng trang, đặt trong
+      thư mục out/. Người dùng vào web chỉ nhận file đã có sẵn — không cần máy
+      chủ “vẽ” trang mỗi lần truy cập.
+
+    - Cấu hình output: 'export' trong next.config.ts:
+      Lệnh báo cho Next.js “chỉ xuất file tĩnh”, không chạy chế độ server động.
+
+    - HTML / CSS / JS:
+      • HTML: cấu trúc nội dung trang (tiêu đề, đoạn văn, ảnh).
+      • CSS (Cascading Style Sheets): quy định màu sắc, cỡ chữ, bố cục.
+      • JS (JavaScript): mã chạy trên trình duyệt để xử lý tương tác (menu,
+        carousel, hiệu ứng cuộn).
+
+    - Backend / API / cơ sở dữ liệu (database):
+      • Backend (hậu trường): phần xử lý trên máy chủ (đăng nhập, lưu tin…).
+      • API (Application Programming Interface — giao diện lập trình ứng dụng):
+        “Cổng” để phần mềm trao đổi dữ liệu; ví dụ app gọi API thời tiết để
+        lấy nhiệt độ.
+      Dự án này KHÔNG dùng backend riêng; nội dung nằm trong file TypeScript
+      (data layer — tầng dữ liệu tĩnh trong mã nguồn).
+
+2.2. Mô hình triển khai đề xuất
+
+    - Git / GitHub:
+      • Git: hệ thống quản lý phiên bản mã nguồn (lưu lịch sử thay đổi, quay
+        lại bản cũ, làm việc nhóm).
+      • GitHub: dịch vụ lưu trữ mã nguồn trên Internet, gắn với Git.
+
+    - Hosting (lưu trữ web):
+      Nơi đặt file website để người dùng truy cập qua Internet. Vercel là một
+      nhà cung cấp hosting chuyên cho dự án Next.js.
+
+    - CI/CD (Continuous Integration / Continuous Deployment — tích hợp liên tục
+      / triển khai liên tục):
+      Quy trình tự động: mỗi khi đẩy (push) code mới lên GitHub → máy chủ Vercel
+      tự chạy kiểm tra, build (đóng gói) và đưa website lên mạng, không cần
+      upload thủ công từng file.
+
+    - Luồng làm việc:
+      Phát triển trên máy cá nhân (local — môi trường cục bộ)
+        → commit (ghi nhận thay đổi vào Git)
+        → push (đẩy lên GitHub)
+        → Vercel build và publish (xuất bản) bản production (bản chính thức
+          cho người dùng cuối, khác với bản dev đang chỉnh sửa).
+
+
+III. CÔNG NGHỆ VÀ NGÔN NGỮ SỬ DỤNG
+--------------------------------------------------------------------------------
+
+3.1. Ngôn ngữ lập trình
+
+    - TypeScript:
+      JavaScript có thêm “kiểu dữ liệu” (type); trình biên dịch báo lỗi sớm
+      khi gán sai kiểu (ví dụ gán chữ vào biến chỉ nhận số), giúp dự án lớn
+      ít lỗi hơn.
+
+    - JavaScript:
+      Ngôn ngữ lập trình phổ biến cho web; chạy trên trình duyệt và trên Node.js.
+
+    - Node.js:
+      Môi trường chạy JavaScript trên máy tính (không qua trình duyệt), dùng
+      để cài thư viện, chạy lệnh build, chạy máy chủ dev.
+
+    - CSS / Tailwind CSS:
+      Tailwind là framework CSS theo hướng “utility-first” (ưu tiên lớp tiện ích):
+      thay vì viết file CSS dài, ta gắn class như “text-red-500”, “p-4” trực
+      tiếp trong mã giao diện để chỉnh nhanh.
+
+    - HTML:
+      Trong dự án này HTML được sinh tự động từ file .tsx khi build.
+
+    - TSX:
+      Đuôi file kết hợp TypeScript + cú pháp JSX (viết giao diện giống HTML
+      ngay trong code React).
+
+3.2. Framework và thư viện chính
+
+    | Thành phần        | Giải thích ngắn |
+    |-------------------|-----------------|
+    | Next.js 15        | Khung chính: routing, build, tối ưu web. |
+    | React 19          | Thư viện UI theo component. |
+    | TypeScript 5      | Kiểm tra kiểu tĩnh (static type checking). |
+    | Tailwind CSS 4    | Soạn style bằng class tiện ích. |
+    | Framer Motion     | Thư viện animation (chuyển động, parallax — hiệu ứng |
+    |                   | nền/lớp di chuyển khác tốc độ khi cuộn trang). |
+    | shadcn/ui + Radix | Bộ component giao diện có sẵn (nút, accordion…); |
+    |                   | Radix cung cấp phần tương tác truy cập tốt (a11y). |
+    | Lucide React      | Bộ icon (biểu tượng mũi tên, menu…) dạng component. |
+    | ESLint            | Công cụ “lint” — quét mã, cảnh báo lỗi style và lỗi |
+    |                   | logic phổ biến trước khi chạy. |
+
+3.3. Công cụ phát triển
+
+    - npm (Node Package Manager — trình quản lý gói):
+      Cài thư viện bên thứ ba (dependencies), chạy script trong package.json
+      (dev, build, lint…).
+
+    - package.json:
+      File khai báo tên dự án, phiên bản thư viện và các lệnh npm.
+
+    - create-next-app:
+      Lệnh khởi tạo sẵn cấu trúc thư mục chuẩn cho dự án Next.js mới.
+
+    - Git:
+      Xem mục II.2.
+
+    - VS Code:
+      Phần mềm soạn thảo mã nguồn (IDE — Integrated Development Environment,
+      môi trường phát triển tích hợp): gợi ý code, gỡ lỗi, tích hợp terminal.
+
+
+IV. CẤU TRÚC THƯ MỤC MÃ NGUỒN
+--------------------------------------------------------------------------------
+
+hue_craft_village/
+│
+├── public/          Tài nguyên tĩnh: ảnh, file copy nguyên vẹn lên web.
+│                    Không qua bundler (công cụ gộp/nén JS/CSS).
+│
+├── src/             Mã nguồn chính.
+│   ├── app/         App Router — định tuyến (routing): mỗi thư mục = một URL.
+│   │   ├── page.tsx     File định nghĩa nội dung một trang.
+│   │   ├── layout.tsx   Layout (khung chung): navbar, footer, font, metadata
+│   │   │                (thông tin SEO: title, description cho Google).
+│   │   └── …/             Các route con: /gioi-thieu, /lang-nghe/…
+│   │
+│   ├── components/  Component tái sử dụng (navbar, footer, nút…).
+│   ├── sections/    Khối nội dung lớn (ví dụ toàn bộ trang chủ).
+│   ├── data/        Dữ liệu tĩnh (danh sách làng nghề, sự kiện…).
+│   ├── lib/         Hàm tiện ích, cấu hình menu (site.ts), gộp class CSS (cn).
+│   ├── hooks/       React hooks — hàm tái sử dụng logic trong component
+│   │                (ví dụ theo dõi kích thước màn hình); dự phòng mở rộng.
+│   └── assets/      File import qua bundler (nếu có).
+│
+├── scripts/         Script Node.js phụ trợ (sinh dữ liệu làng nghề).
+├── _crawl/          Nội dung thô thu thập (crawl) từ Google Sites để tham khảo.
+│
+├── next.config.ts   Cấu hình Next.js.
+├── package.json     Danh sách thư viện và lệnh npm.
+├── tsconfig.json    Cấu hình TypeScript; alias @/* → trỏ thư mục src/
+│                    (import gọn: @/components/... thay vì ../../components).
+└── eslint.config.mjs Quy tắc ESLint.
+
+Thuật ngữ trong cấu trúc:
+  - Route / URL: đường dẫn trên thanh địa chỉ (vd. /lang-nghe).
+  - Slug: đoạn tên ngắn trên URL (vd. gom-phuoc-tich).
+  - Navbar / Footer: thanh menu trên cùng / chân trang.
+  - Repository (repo): kho chứa toàn bộ mã nguồn trên Git/GitHub.
+
+
+V. KIẾN TRÚC VÀ LUỒNG HOẠT ĐỘNG
+--------------------------------------------------------------------------------
+
+5.1. Kiến trúc phân lớp (đơn giản)
+
+    [ Trình duyệt (browser) ]
+            ↓
+    [ File HTML/CSS/JS trong thư mục out/ ]
+            ↓
+    [ Hydration (hydrate) trên client ]
+      Trình duyệt tải HTML tĩnh trước, sau đó React “gắn” thêm hành vi
+      tương tác (nút, animation). “Client” = phía người dùng (trình duyệt),
+      đối lập “server” = phía máy chủ.
+            ↓
+    [ Đọc dữ liệu từ src/data/*.ts — không gọi API ]
+
+5.2. Routing (định tuyến)
+
+    - Cấu trúc thư mục src/app/ quyết định URL.
+    - Route động [slug]: một file page.tsx phục vụ nhiều làng nghề; slug thay
+      đổi theo từng làng (vd. /lang-nghe/gom-phuoc-tich).
+
+5.3. Giao diện
+
+    - Layout thống nhất trên mọi trang.
+    - next/font: tải font Google tối ưu (Be Vietnam Pro, Playfair Display).
+    - Responsive (đáp ứng): giao diện tự co giãn cho desktop (máy tính),
+      tablet (máy tính bảng), mobile (điện thoại).
+    - Hero: khối banner đầu trang; carousel: dãy thẻ trượt ngang.
+
+
+VI. CÁC CHỨC NĂNG / TRANG CHÍNH
+--------------------------------------------------------------------------------
+
+  STT | URL                  | Chức năng
+  ----|----------------------|------------------------------------------
+   1  | /                    | Trang chủ
+   2  | /gioi-thieu          | Giới thiệu dự án
+   3  | /lang-nghe           | Danh sách làng nghề
+   4  | /lang-nghe/[slug]    | Chi tiết từng làng (ảnh, nghệ nhân, trải nghiệm)
+   5  | /tu-van-huong-nghiep | Tư vấn hướng nghiệp
+   6  | /chatbot-huong-nghiep| Giao diện chatbot (demo UI — chưa AI thật)
+   7  | /khoi-nghiep         | Khởi nghiệp
+   8  | /chatbot-khoi-nghiep | Chatbot khởi nghiệp (demo)
+   9  | /thu-vien-anh        | Thư viện ảnh
+  10  | /tin-tuc             | Tin tức, sự kiện
+  11  | /trai-nghiem         | Trải nghiệm làng nghề
+  12  | /hoi-dap             | Hỏi đáp (FAQ — Frequently Asked Questions)
+  13  | /lien-he             | Liên hệ
+
+
+VII. QUY TRÌNH PHÁT TRIỂN VÀ BUILD
+--------------------------------------------------------------------------------
+
+7.1. Cài đặt môi trường
+
+    - Node.js LTS (Long Term Support — bản hỗ trợ dài hạn, ổn định).
+    - Clone repository: sao chép mã nguồn từ GitHub về máy (git clone …).
+    - npm install: tải và cài các thư viện khai báo trong package.json.
+
+7.2. Môi trường development (phát triển)
+
+    npm run dev
+    → Chạy máy chủ dev trên http://localhost:3000
+      (localhost = máy của bạn; cổng 3000 là cổng mạng nội bộ cho app).
+    → Hot reload (tải lại nóng): sửa file, trình duyệt tự cập nhật không cần
+      restart thủ công.
+
+7.3. Build production
+
+    npm run build
+    → Biên dịch (compile): chuyển TypeScript/TSX thành JavaScript tối ưu,
+      sinh HTML tĩnh vào thư mục out/.
+
+7.4. Xem trước bản export
+
+    npm run preview:export
+    → Dùng HTTP server (máy chủ web nhỏ) phục vụ thư mục out/.
+      Không mở file HTML bằng double-click (giao thức file://) vì đường dẫn
+      CSS/JS sẽ lỗi.
+
+7.5. Script bổ sung
+
+    npm run build:craft-bundles — gộp (bundle) dữ liệu làng nghề từ nguồn crawl.
+    npm run lint — chạy ESLint kiểm tra mã.
+
+
+VIII. ĐƯA MÃ NGUỒN LÊN GITHUB
+--------------------------------------------------------------------------------
+
+8.1. Chuẩn bị
+
+    - Tạo repository trên GitHub (public = công khai, private = riêng tư).
+
+8.2. Các lệnh Git thường dùng
+
+    git init          Khởi tạo kho Git cục bộ.
+    git add .         Đưa mọi thay đổi vào vùng chờ (staging).
+    git commit -m "…" Lưu một “snapshot” (ảnh chụp) mã với ghi chú.
+    git branch -M main Đặt nhánh chính tên main (nhánh — branch: dòng phát
+                      triển song song; main là bản chính).
+    git remote add origin <url>  Gắn địa chỉ GitHub (remote = kho xa).
+    git push -u origin main      Đẩy nhánh main lên GitHub.
+
+8.3. Lưu ý
+
+    - .gitignore: liệt kê thư mục/file Git bỏ qua (node_modules, .env…).
+    - .env: file biến môi trường (mật khẩu, API key); không đưa lên GitHub.
+    - API key: chuỗi bí mật để gọi dịch vụ bên thứ ba (AI, thanh toán…).
+    - Static assets: file tĩnh (ảnh, font) đi kèm website.
+
+
+IX. TRIỂN KHAI LÊN VERCEL
+--------------------------------------------------------------------------------
+
+9.1. Vì sao chọn Vercel
+
+    - Tích hợp CI/CD (giải thích ở mục II.2).
+    - CDN (Content Delivery Network — mạng phân phối nội dung): copy file web
+      lên nhiều máy chủ gần người dùng → tải trang nhanh hơn.
+    - HTTPS (HyperText Transfer Protocol Secure): kết nối mã hóa, có ổ khóa
+      trên thanh địa chỉ; Vercel cấp miễn phí chứng chỉ SSL.
+
+9.2. Các bước deploy (triển khai — đưa website lên Internet)
+
+    Bước 1: Đăng nhập https://vercel.com (có thể dùng tài khoản GitHub).
+    Bước 2: Import repository từ GitHub.
+    Bước 3: Cấu hình build:
+            - Framework Preset: loại dự án (Next.js).
+            - Build Command: lệnh đóng gói (npm run build).
+            - Output Directory: thư mục chứa file sau build (out).
+    Bước 4: Nhận URL production, ví dụ:
+            https://hue-craft-village.vercel.app
+
+9.3. Cập nhật sau này
+
+    Sửa code → git add → git commit → git push
+    → Pipeline (chuỗi bước tự động trên Vercel) build và deploy lại.
+
+    - GitHub Pages: hosting tĩnh miễn phí của GitHub.
+    - GitHub Actions: tự động hóa trên GitHub (chạy build khi có push).
+
+
+
+X. ĐẶC ĐIỂM KỸ THUẬT NỔI BẬT
+--------------------------------------------------------------------------------
+
+  - Static export: không lộ logic server; chi phí host thấp; tải nhanh.
+  - TypeScript strict mode: chế độ kiểm tra kiểu chặt, hạn chế lỗi runtime
+    (lỗi phát sinh khi người dùng đang dùng web).
+  - Component hóa: chia giao diện thành khối nhỏ, dùng lại nhiều trang.
+  - Tách data (src/data/): sửa nội dung làng nghề không phải sửa layout.
+  - SEO (Search Engine Optimization — tối ưu công cụ tìm kiếm):
+    metadata title/description, thuộc tính lang="vi" giúp Google hiểu ngôn ngữ.
+  - Font subset: chỉ tải bộ ký tự cần (Latin + Vietnamese), giảm dung lượng.
+
+
+XI. HẠN CHẾ VÀ HƯỚNG PHÁT TRIỂN
+--------------------------------------------------------------------------------
+
+11.1. Hạn chế hiện tại
+
+    - Chatbot: Hiện tại hệ thống chatbot đang được triển khai thông qua nền tảng NotebookLM, 
+	  vì vậy người dùng sẽ được chuyển hướng sang giao diện của NotebookLM để 
+	  thực hiện trao đổi và tương tác với chatbot.
+	  
+    - Dữ liệu tĩnh: đổi tin phải sửa code và build lại.
+	
+    - Chưa có CMS (Content Management System — hệ quản trị nội dung):
+      giao diện cho người không biết code đăng/sửa bài.
+
+11.2. Hướng mở rộng
+
+	- Tích hợp API AI cho chatbot: Phát triển chatbot hướng nghiệp và hỗ trợ khởi nghiệp 
+	  bằng cách tích hợp trực tiếp API AI vào website, giúp người dùng tương tác 
+	  ngay trên hệ thống mà không cần chuyển sang nền tảng bên ngoài.
+	  
+	- Headless CMS: Xây dựng hệ quản trị nội dung tách biệt giữa phần quản trị 
+	  và giao diện hiển thị, giúp việc quản lý, mở rộng và tích hợp dữ liệu trở nên linh hoạt hơn.
+	  
+	- Đa ngôn ngữ (i18n – Internationalization): Hỗ trợ nhiều ngôn ngữ nhằm mở rộng phạm vi 
+	  người dùng và nâng cao khả năng tiếp cận cho nhiều đối tượng khác nhau.
+	  
+	- PWA (Progressive Web App): Triển khai website theo mô hình ứng dụng web tiến bộ, 
+	  cho phép người dùng cài đặt website như một ứng dụng trên thiết bị 
+	  và hỗ trợ sử dụng một số chức năng ở chế độ ngoại tuyến (offline).
+
+
+XII. KẾT LUẬN
+--------------------------------------------------------------------------------
+
+Hue Craft Village là website giới thiệu văn hóa — làng nghề Huế, xây bằng
+Next.js, React, TypeScript và Tailwind CSS, xuất bản dạng trang tĩnh.
+
+Quy trình DevOps nhẹ (DevOps = Development + Operations: gắn kết lập trình
+và vận hành, tự động hóa build/deploy):
+
+  Phát triển (local) → Git/GitHub (version control — quản lý phiên bản)
+    → Vercel (hosting + CI/CD)
+
+Website góp phần số hóa làng nghề Huế và hỗ trợ hướng nghiệp, khởi nghiệp —
+phù hợp đồ án / dự án học tập.
+
+
+================================================================================
+  PHỤ LỤC: BẢNG TRA CỨU THUẬT NGỮ VÀ VIẾT TẮT
+================================================================================
+
+  Viết tắt / Thuật ngữ          | Giải thích bằng tiếng Việt
+  ------------------------------|------------------------------------------
+  API                           | Giao diện để phần mềm trao đổi dữ liệu.
+  App Router                    | Cách Next.js map thư mục → URL.
+  Backend                       | Phần xử lý trên máy chủ (đăng nhập, DB…).
+  Build                         | Đóng gói mã nguồn thành file chạy được/web.
+  CDN                           | Mạng máy chủ phân tán, tải file gần user.
+  CI/CD                         | Tự động kiểm tra + build + deploy khi push code.
+  Client                        | Phía trình duyệt / thiết bị người dùng.
+  CMS                           | Hệ thống quản trị nội dung (đăng bài, sửa tin).
+  Component                     | Khối giao diện tái sử dụng trong React.
+  Commit                        | Lưu một bản thay đổi vào Git.
+  CSS                           | Ngôn ngữ định dạng giao diện web.
+  Deploy                        | Đưa bản build lên máy chủ, mở cho công chúng.
+  DevOps                        | Văn hóa/quy trình gắn dev và vận hành hệ thống.
+  Framework                     | Khung phát triển có sẵn quy ước, công cụ.
+  Frontend                      | Phần giao diện người dùng nhìn thấy.
+  Git / GitHub                  | Quản lý phiên bản / lưu mã trên cloud.
+  Hosting                       | Dịch vụ lưu trữ website trên Internet.
+  Hot reload                    | Tự tải lại trang khi sửa code (dev).
+  HTML                          | Ngôn ngữ cấu trúc trang web.
+  HTTP / HTTPS                  | Giao thức truyền web / bản mã hóa an toàn.
+  Hydration                     | React “kích hoạt” tương tác sau HTML tĩnh.
+  IDE                           | Phần mềm soạn code tích hợp (VS Code, Cursor).
+  JS / JavaScript               | Ngôn ngữ lập trình cho web.
+  JSX / TSX                     | Viết HTML-like trong JavaScript / TypeScript.
+  Lint / ESLint                 | Kiểm tra mã theo quy tắc, báo lỗi sớm.
+  Local                         | Trên máy cá nhân, chưa lên server công cộng.
+  Localhost                     | Địa chỉ máy của chính bạn (127.0.0.1).
+  npm                           | Công cụ cài package và chạy script Node.
+  Node.js                       | Chạy JavaScript ngoài trình duyệt.
+  PWA                           | Web có thể “cài” như app, hỗ trợ offline.
+  Push                          | Đẩy commit từ máy local lên GitHub.
+  React                         | Thư viện UI component của Meta.
+  Repository (repo)             | Kho chứa toàn bộ mã dự án.
+  Responsive                    | Giao diện thích ứng nhiều kích thước màn hình.
+  Route / Routing               | Đường dẫn URL và cách app điều hướng trang.
+  Runtime                       | Lúc chương trình đang chạy (khác lúc viết code).
+  SEO                           | Tối ưu để Google/tìm kiếm index tốt hơn.
+  Server                        | Máy chủ xử lý hoặc phục vụ file cho client.
+  SPA                           | Ứng dụng một trang, chuyển tab không reload full.
+  SSG                           | Sinh sẵn HTML tĩnh lúc build.
+  Slug                          | Đoạn tên trên URL (gom-phuoc-tich).
+  SSL                           | Chứng chỉ bảo mật cho HTTPS.
+  Static export / Static web    | Xuất website thành file tĩnh HTML/CSS/JS.
+  TypeScript                    | JavaScript có kiểu dữ liệu, kiểm tra lỗi sớm.
+  UI                            | User Interface — giao diện người dùng.
+  URL                           | Địa chỉ trang trên trình duyệt.
+  Version control               | Quản lý lịch sử thay đổi mã (Git).
+
+================================================================================
+  Tài liệu thuyết minh — Hue Craft Village
+  Cập nhật: tháng 5/2026
+================================================================================

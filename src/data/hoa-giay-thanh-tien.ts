@@ -1,5 +1,8 @@
 /** Nội dung tham chiếu dự án Huế Craft Village 4.0 — lưu trong mã nguồn website này (không nhúng URL Google Sites). */
 
+import craftVillageYoutube from "@/data/craft-village-youtube.json";
+import { hoaGiayThanhTienGalleryImages } from "@/data/craft-village-galleries";
+
 export const hoaGiayThanhTienArticle = {
   position: {
     title: "1. Vị trí",
@@ -87,23 +90,10 @@ export const hoaGiayThanhTienArticle = {
   },
 };
 
-/** Ảnh minh họa & bản đồ — chỉ đường dẫn nội bộ (`public/`). Thêm ảnh Sites vào `public/images/crafts/hoa-giay-thanh-tien/` rồi cập nhật mảng dưới (xem scripts/craft-gallery-images.txt). */
+/** Ảnh & video — `public/images/gallery/giay-thanh-tien/`, YouTube từ trang Google Sites gốc. */
 export const hoaGiayThanhTienMedia = {
-  galleryFromSource: [
-    {
-      src: "/images/villages/hoa-giay-thanh-tien.png",
-      alt: "Làng nghề hoa giấy Thanh Tiên — ảnh đại diện (thư viện chi tiết có thể bổ sung trong repo)",
-    },
-  ],
-  /**
-   * Bản đồ theo địa danh trên trang nguồn (Phường Dương Nỗ / làng hoa giấy Thanh Tiên).
-   * Trang Sites không cung cấp URL nhúng map tĩnh trong HTML đã crawl.
-   */
+  galleryFromSource: hoaGiayThanhTienGalleryImages,
   mapEmbedUrl:
     "https://www.google.com/maps?q=L%C3%A0ng+hoa+gi%E1%BA%A5y+Thanh+Ti%C3%AAn,+D%C6%B0%C6%A1ng+N%E1%BB%97,+Hu%E1%BA%BF,+Vi%E1%BB%87t+Nam&hl=vi&z=14&output=embed",
-  /**
-   * Video YouTube: trang Sites có mục “Embedded Files” nhưng không có URL YouTube
-   * trong HTML tĩnh / bản đọc r.jina.ai. Thêm `videoId` (11 ký tự) khi có link chính xác.
-   */
-  youtubeEmbeds: [] as { videoId: string; title: string }[],
+  youtubeEmbeds: craftVillageYoutube["hoa-giay-thanh-tien"],
 };

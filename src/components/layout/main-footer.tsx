@@ -1,38 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { navItemHasChildren, siteNavProminentBar } from "@/lib/site";
-
-function IconFacebook({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M9.198 21.5h4v-8.01h2.659l.266-3.099h-2.925V8.402c0-.889.179-1.239 1.159-1.239h1.825V4.14c-.315-.04-1.382-.125-2.64-.125-2.697 0-4.538 1.657-4.538 4.688v2.697H7.5v3.099h2.697V21.5z" />
-    </svg>
-  );
-}
-
-function IconInstagram({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 .001 6.001A3 3 0 0 0 12 9z" />
-    </svg>
-  );
-}
-
-function IconYoutube({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.7 31.7 0 0 0 0 12a31.7 31.7 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1 31.7 31.7 0 0 0 .5-5.8 31.7 31.7 0 0 0-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z" />
-    </svg>
-  );
-}
-
-function TikTokIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-    </svg>
-  );
-}
+import { isExternalHref } from "@/lib/nav";
 
 export function MainFooter() {
   return (
@@ -63,20 +32,6 @@ export function MainFooter() {
           <p className="mt-4 max-w-md text-sm leading-relaxed text-[#f5efe6]/80">
             Giữ hồn di sản — kết nối thế hệ trẻ qua trải nghiệm văn hóa và câu chuyện làng nghề cố đô.
           </p>
-          <div className="mt-5 flex justify-center gap-3">
-            <a href="#" className="rounded-full border border-white/25 p-2 transition hover:bg-white/10" aria-label="Facebook">
-              <IconFacebook className="size-4" />
-            </a>
-            <a href="#" className="rounded-full border border-white/25 p-2 transition hover:bg-white/10" aria-label="Instagram">
-              <IconInstagram className="size-4" />
-            </a>
-            <a href="#" className="rounded-full border border-white/25 p-2 transition hover:bg-white/10" aria-label="YouTube">
-              <IconYoutube className="size-4" />
-            </a>
-            <a href="#" className="rounded-full border border-white/25 p-2 transition hover:bg-white/10" aria-label="TikTok">
-              <TikTokIcon className="size-4" />
-            </a>
-          </div>
         </div>
 
         <div>
@@ -91,9 +46,20 @@ export function MainFooter() {
                   <ul className="mt-2 space-y-1.5 border-l border-white/20 pl-3 text-[13px] text-[#f5efe6]/80">
                     {entry.children.map((c) => (
                       <li key={`${entry.href}-${c.href}`}>
-                        <Link href={c.href} className="transition hover:text-[#c8a96b]">
-                          {c.label}
-                        </Link>
+                        {isExternalHref(c.href) ? (
+                          <a
+                            href={c.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="transition hover:text-[#c8a96b]"
+                          >
+                            {c.label} ↗
+                          </a>
+                        ) : (
+                          <Link href={c.href} className="transition hover:text-[#c8a96b]">
+                            {c.label}
+                          </Link>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -106,11 +72,6 @@ export function MainFooter() {
                 </li>
               )
             )}
-            <li>
-              <Link href="/hoi-dap" className="transition hover:text-[#c8a96b]">
-                Hỏi & đáp
-              </Link>
-            </li>
           </ul>
         </div>
 

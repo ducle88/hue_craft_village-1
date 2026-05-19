@@ -1,57 +1,32 @@
-"use client";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { CAREER_CHATBOT_NOTEBOOK_URL } from "@/data/chatbot";
 
-import { motion } from "framer-motion";
-import { careerMessages, careerRecommendations, careerSteps } from "@/data/chatbot";
+export const metadata: Metadata = {
+  title: "Chatbot hướng nghiệp — Hue Craft Village",
+  description: "Trợ lý AI tư vấn hướng nghiệp trên Google NotebookLM.",
+};
 
 export default function CareerChatbotPage() {
   return (
-    <div className="container-luxury grid gap-6 py-8 md:py-10 lg:grid-cols-[1.2fr_1fr]">
-      <section className="card-luxury p-4 sm:p-6">
-        <h1 className="text-3xl sm:text-4xl">Chatbot Hướng nghiệp</h1>
-        <p className="mt-2 text-[#5c4033]/80">Tư vấn nghề phù hợp cho bạn trẻ yêu làng nghề Huế.</p>
-        <div className="mt-6 space-y-3">
-          {careerMessages.map((m, i) => (
-            <motion.div
-              key={`${m.text}-${i}`}
-              initial={{ opacity: 0, x: m.role === "user" ? 30 : -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.2 }}
-              className={`max-w-[90%] rounded-2xl px-4 py-3 text-sm sm:max-w-[80%] ${m.role === "user" ? "ml-auto bg-[#7b1e1e] text-[#f5efe6]" : "bg-white/80 text-[#5c4033]"}`}
-            >
-              {m.text}
-            </motion.div>
-          ))}
-        </div>
-        <div className="mt-5 rounded-2xl border border-[#d9c8b2] bg-white/70 p-3 text-sm text-[#7b1e1e]">AI đang nhập...</div>
-        <div className="mt-3 grid grid-cols-[1fr_auto] gap-2">
-          <input className="rounded-xl border border-[#d9c8b2] bg-white/70 px-3 py-2 text-sm outline-none" placeholder="Nhập điều bạn quan tâm..." />
-          <button type="button" className="rounded-xl bg-[#7b1e1e] px-4 py-2 text-sm text-[#f5efe6]">Gửi</button>
-        </div>
-      </section>
-
-      <aside className="space-y-6">
-        <div className="card-luxury p-4 sm:p-6">
-          <h2 className="text-2xl">Tiến trình định hướng</h2>
-          <ul className="mt-4 space-y-2">
-            {careerSteps.map((step, i) => (
-              <li key={step} className="rounded-xl border border-[#d9c8b2] bg-white/70 px-3 py-2 text-sm text-[#5c4033]">
-                Bước {i + 1}: {step}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="card-luxury p-4 sm:p-6">
-          <h2 className="text-2xl">Gợi ý nghề</h2>
-          <div className="mt-4 grid gap-3">
-            {careerRecommendations.map((item) => (
-              <div key={item.name} className="rounded-xl border border-[#d9c8b2] bg-white/70 p-3">
-                <p className="font-semibold text-[#7b1e1e]">{item.name}</p>
-                <p className="mt-1 text-sm text-[#5c4033]/80">{item.fit}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </aside>
+    <div className="container-luxury flex min-h-[50vh] flex-col items-center justify-center py-16 text-center">
+      <p className="text-sm uppercase tracking-[0.2em] text-[#7b1e1e]">Chatbot hướng nghiệp</p>
+      <h1 className="font-heading mt-3 text-3xl text-[#2f2018] md:text-4xl">Trợ lý AI trên NotebookLM</h1>
+      <p className="mt-4 max-w-lg text-[#5c4033]/85">
+        Chatbot tư vấn và định hướng nghề nghiệp được triển khai trên nền tảng Google NotebookLM. Bạn cần đăng nhập
+        Google để sử dụng.
+      </p>
+      <a
+        href={CAREER_CHATBOT_NOTEBOOK_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-8 inline-flex rounded-full bg-[#7b1e1e] px-8 py-3.5 text-sm font-semibold text-[#f5efe6] transition hover:bg-[#5c1515]"
+      >
+        Mở Chatbot hướng nghiệp ↗
+      </a>
+      <Link href="/tu-van-huong-nghiep" className="mt-6 text-sm font-medium text-[#7b1e1e] underline-offset-4 hover:underline">
+        ← Quay lại Tư vấn hướng nghiệp
+      </Link>
     </div>
   );
 }

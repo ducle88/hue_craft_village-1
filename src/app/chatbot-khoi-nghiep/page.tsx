@@ -1,59 +1,32 @@
-"use client";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { STARTUP_CHATBOT_NOTEBOOK_URL } from "@/data/startup";
 
-import { motion } from "framer-motion";
-import { marketCards, startupMessages, startupResources, startupRoadmap } from "@/data/startup";
+export const metadata: Metadata = {
+  title: "Chatbot khởi nghiệp — Hue Craft Village",
+  description: "Trợ lý AI tư vấn khởi nghiệp trên Google NotebookLM.",
+};
 
 export default function StartupChatbotPage() {
   return (
-    <div className="container-luxury grid gap-6 py-8 md:py-10 xl:grid-cols-[1.2fr_1fr]">
-      <section className="card-luxury p-4 sm:p-6">
-        <h1 className="text-3xl sm:text-4xl">Chatbot Khởi nghiệp</h1>
-        <p className="mt-2 text-[#5c4033]/80">Dashboard + chat hybrid cho hành trình xây dựng mô hình kinh doanh làng nghề.</p>
-        <div className="mt-6 space-y-3">
-          {startupMessages.map((m, i) => (
-            <motion.div
-              key={`${m.text}-${i}`}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2 }}
-              className={`max-w-[92%] rounded-2xl px-4 py-3 text-sm sm:max-w-[85%] ${m.role === "user" ? "ml-auto bg-[#0f3d3e] text-[#f5efe6]" : "bg-white/80 text-[#5c4033]"}`}
-            >
-              {m.text}
-            </motion.div>
-          ))}
-        </div>
-        <div className="mt-3 grid grid-cols-[1fr_auto] gap-2">
-          <input className="rounded-xl border border-[#d9c8b2] bg-white/70 px-3 py-2 text-sm outline-none" placeholder="Nhập ý tưởng kinh doanh..." />
-          <button type="button" className="rounded-xl bg-[#0f3d3e] px-4 py-2 text-sm text-[#f5efe6]">Gửi</button>
-        </div>
-
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
-          {marketCards.map((card) => (
-            <div key={card.title} className="rounded-2xl border border-[#d9c8b2] bg-white/70 p-4">
-              <p className="text-sm text-[#5c4033]/80">{card.title}</p>
-              <p className="mt-2 font-heading text-2xl text-[#7b1e1e]">{card.value}</p>
-              <p className="mt-1 text-xs text-[#5c4033]/70">{card.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <aside className="space-y-6">
-        <div className="card-luxury p-4 sm:p-6">
-          <h2 className="text-2xl">Roadmap khởi nghiệp</h2>
-          <ul className="mt-4 space-y-2 text-sm text-[#5c4033]/85">
-            {startupRoadmap.map((step, i) => <li key={step}>0{i + 1}. {step}</li>)}
-          </ul>
-        </div>
-        <div className="card-luxury p-4 sm:p-6">
-          <h2 className="text-2xl">Tài nguyên hữu ích</h2>
-          <ul className="mt-4 space-y-3">
-            {startupResources.map((resource) => (
-              <li key={resource} className="rounded-xl border border-[#d9c8b2] bg-white/70 px-3 py-2 text-sm text-[#5c4033]/85">{resource}</li>
-            ))}
-          </ul>
-        </div>
-      </aside>
+    <div className="container-luxury flex min-h-[50vh] flex-col items-center justify-center py-16 text-center">
+      <p className="text-sm uppercase tracking-[0.2em] text-[#0B8CB4]">Chatbot khởi nghiệp</p>
+      <h1 className="font-heading mt-3 text-3xl text-[#2f2018] md:text-4xl">Trợ lý AI trên NotebookLM</h1>
+      <p className="mt-4 max-w-lg text-[#5c4033]/85">
+        Chatbot tư vấn hỗ trợ khởi nghiệp được triển khai trên nền tảng Google NotebookLM. Bạn cần đăng nhập Google để
+        sử dụng.
+      </p>
+      <a
+        href={STARTUP_CHATBOT_NOTEBOOK_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-8 inline-flex rounded-full bg-[#0B8CB4] px-8 py-3.5 text-sm font-semibold text-[#f5efe6] transition hover:bg-[#086b8d]"
+      >
+        Mở Chatbot khởi nghiệp ↗
+      </a>
+      <Link href="/khoi-nghiep" className="mt-6 text-sm font-medium text-[#0B8CB4] underline-offset-4 hover:underline">
+        ← Quay lại Chuyên mục khởi nghiệp
+      </Link>
     </div>
   );
 }
